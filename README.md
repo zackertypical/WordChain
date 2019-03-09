@@ -1,5 +1,5 @@
 # WordChain
-Software enginering
+
 
 #### 参数约定
 
@@ -35,7 +35,7 @@ Reporting|报告	|5*60
 ·ostmortem & Process Improvement Plan|	· 事后总结, 并提出过程改进计划	|2*60	
 | | 合计	|	
 
-####第二阶段
+#### 第二阶段
 
 
 1.Core接口的实现，以及你为Core模块设计的其他接口，并说明如何使用这些接口。
