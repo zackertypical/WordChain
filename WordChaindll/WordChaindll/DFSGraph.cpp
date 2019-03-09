@@ -16,7 +16,7 @@ DFSGraph::~DFSGraph()
 
 void DFSGraph::findAnsChain() 
 {
-	visited.assign(vertexNum + 1, 0);
+	
 	//所有节点深度优先遍历
 	for (int i = 1; i <= vertexNum; i++)
 	{
@@ -34,6 +34,10 @@ void DFSGraph::findAnsChain()
 		//visited[i] = 0;
 	}
 	child.assign(vertexNum + 1, 0);
+	visited.assign(vertexNum + 1, 0);
+	parent.assign(vertexNum + 1, 0);
+	child.assign(vertexNum + 1, 0);
+	dp.assign(vertexNum + 1, 0);
 	if (m_hasCircle)
 		dfs(chain_head);
 	else

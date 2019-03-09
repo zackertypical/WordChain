@@ -69,9 +69,9 @@ void output_file(char *filename, char*results[],int len)
 
 int main(int argc,char *argv[])
 {
-	char *words[MAX];
-	char *result[MAX];
-	int len;
+	//char *words[MAX];
+	//char *result[MAX];
+	int len = 0;
 
 	bool findMaxChar = false;
 	bool findMaxLen = false;
@@ -147,7 +147,7 @@ int main(int argc,char *argv[])
 		}
 	}
 	//len = read_file(filename, words);
-	len = read_file("testfile/aa.txt",words);
+	//len = read_file("testfile/11.txt",words);
 	if (flag)
 	{
 		cout << "wrong format" << endl;
@@ -161,8 +161,10 @@ int main(int argc,char *argv[])
 	else{
 		ans = coreWordCompute.gen_chain_word(words, len, result, head, tail, enable_loop);
 	}*/
-	ans = gen_chain_word(words, len, result,0,0, 0);
-	
+	//ans = gen_chain_word(words, len, result,0,0,1);
+	char *words[100] = { "abc","cbb","bmm","mcd","dak","kao","jm","zdd","lq","qq" };
+	char *result[1000];
+	ans = gen_chain_word(words, 10, result, 0, 0, 1);
 	if (ans < 2)
 		cout << "no chain found" << endl;
 	output_file("solution.txt", result,ans);
