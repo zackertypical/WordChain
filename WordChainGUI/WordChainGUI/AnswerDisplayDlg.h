@@ -22,4 +22,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	int m_ansLength;
+	CString m_wordStr;
+	afx_msg void OnBnClickedButton1();
+	CString m_outFilename;
 };
