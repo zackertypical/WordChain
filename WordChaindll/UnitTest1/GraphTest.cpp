@@ -12,18 +12,13 @@ namespace GraphTest
 	{
 	public:
 
-		TEST_METHOD(TestDFSGraph)
+		TEST_METHOD(TestBaseGraph)
 		{
-			try
-			{
-				DFSHeadTailGraph g(1);
-				g.setTailSingle(1);
-				g.insertEdge(1, 2);
-			}
-			catch (exception &e)
-			{
-				cout << e.what();
-			}
+			BaseGraph g(3);
+			Assert::AreEqual(3, g.getVertexNum());
+			Assert::AreEqual(0, g.getEdgeNum());
+			g.insertEdge(1, 2);
+			Assert::AreEqual(1, g.getEdgeNum());
 		}
 		TEST_METHOD(TestHeadGraph)
 		{
@@ -40,11 +35,32 @@ namespace GraphTest
 		}
 		TEST_METHOD(TestHeadTailGraph)
 		{
-			DFSGraph g(10);
+			DFSHeadTailGraph g(4);
+			for (int i = 1; i <= 4; i++)
+			{
+				g.changeVecWeigh(i, 1);
+			}
+			g.setHeadSingle(3);
+			g.setTailSingle(1);
+			g.insertEdge(3, 2);
+			g.insertEdge(2, 1);
+			Assert::AreEqual(2, g.getEdgeNum());
+			vector<int> ans = g.getAnsChain();
+			Assert::AreEqual(3, (int)ans.size());
 		}
-		TEST_METHOD(TestMethodN)
+		TEST_METHOD(LoopGraph)
 		{
-			DFSGraph g(10);
+			DFSGraph g(4);
+			for (int i = 1; i <= 4; i++)
+			{
+				g.changeVecWeigh(i, 1);
+			}
+			g.insertEdge(3, 4);
+			g.insertEdge(4, 3);
+
+			Assert::AreEqual(true,g.hasCircle());
+
 		}
+
 	};
 }

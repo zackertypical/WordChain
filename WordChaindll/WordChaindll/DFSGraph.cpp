@@ -47,7 +47,7 @@ void DFSGraph::findAnsChain()
 		//Ñ­»·µÄ×´¿ö£¡£¡
 		if (find(ans_chain.begin(), ans_chain.end(), j) != ans_chain.end())
 		{
-			cout << "loop" << endl;
+			//cout << "loop" << endl;
 			j = 0;
 			break;
 		}

@@ -26,6 +26,7 @@ void BaseGraph::insertEdge(int i, int j)
 	if ((i > vertexNum)||(j > vertexNum))
 		throw exception(edge_out_of_range_error);
 	adjacentMatrix[i].push_back(j);
+	edgeNum++;
 }
 
 //get

@@ -28,7 +28,7 @@
       <FileName>DFSHeadGraph.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DFSHeadTailGraph" Collapsed="true">
+  <Class Name="DFSHeadTailGraph">
     <Position X="0.5" Y="4.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACACAAEAAEEEAIAAAAQAAAAAAAEAAAAAIAA=</HashCode>
