@@ -1,5 +1,6 @@
 #pragma once
 #include "DFSHeadGraph.h"
+static const char * tail_out_of_range_error = "Tail must be in range";
 class DFSHeadTailGraph :
 	public DFSHeadGraph
 {

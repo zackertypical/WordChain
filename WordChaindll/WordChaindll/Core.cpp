@@ -2,9 +2,15 @@
 #include "Core.h"
 
 
+//字母异常
+//开新内存异常
 
-char Core::alpha_to_lower(char  ch)
+char Core::alpha_to_lower(char  ch)noexcept(false)
 {
+	if((ch < -1)||(ch > 255))
+		throw exception(m_word_error);
+	if (!isalpha(ch))
+		throw exception(m_word_error);
 	return ch |= 32;
 }
 
@@ -52,12 +58,11 @@ void Core::insert_noweighedEdge(DFSGraph &graph)
 		for (int j = 1; j <= wordset_size; j++)
 			if (i != j)
 			{
-				string str1 = wordchain[i];
-				string str2 = wordchain[j];
-				if (*(str1.end() - 1) == *str2.begin())
+				//string str1 = wordchain[i];
+				//string str2 = wordchain[j];
+				if ((wordchain[i][wordchain[i].size()-1]) == wordchain[j][0])
 				{
 					graph.insertEdge(i, j);
-					//cout << i << " " << str1 << " " << j << " " << str2 << endl;
 				}
 
 			}
@@ -74,12 +79,12 @@ void Core::insert_noweighedReverseEdge(DFSGraph &graph)
 		for (int j = 1; j <= wordset_size; j++)
 			if (i != j)
 			{
-				string str1 = wordchain[i];
-				string str2 = wordchain[j];
-				if (*str1.begin() == *(str2.end() - 1))
+				//string str1 = wordchain[i];
+				//string str2 = wordchain[j];
+				//if (*str1.begin() == *(str2.end() - 1))
+				if(wordchain[i][0]==wordchain[j][wordchain[j].length()-1])
 				{
 					graph.insertEdge(i, j);
-					//cout << i << " " << str1 << " " << j << " " << str2 << endl;
 				}
 
 			}
@@ -90,8 +95,8 @@ void Core::setTail(DFSHeadGraph &graph, char tail)
 {
 	for (int i = 1; i <= wordset_size; i++)
 	{
-		string str = wordchain[i];
-		if (*(str.end() - 1) == tail)
+		//string str = wordchain[i];
+		if (wordchain[i][wordchain[i].length()-1] == tail)
 		{
 			graph.setHeadSingle(i);
 		}
@@ -102,8 +107,8 @@ void  Core::setHeadTail(DFSHeadTailGraph &graph, char tail)
 {
 	for (int i = 1; i <= wordset_size; i++)
 	{
-		string str = wordchain[i];
-		if (*(str.end() - 1) == tail)
+		//string str = wordchain[i];
+		if (wordchain[i][wordchain[i].length() - 1] == tail)
 		{
 			graph.setTailSingle(i);
 		}
@@ -116,8 +121,8 @@ void  Core::setHead(DFSHeadGraph &graph, char head)
 {
 	for (int i = 1; i <= wordset_size; i++)
 	{
-		string str = wordchain[i];
-		if (*(str.begin()) == head)
+		//string str = wordchain[i];
+		if (wordchain[i][0] == head)
 		{
 			graph.setHeadSingle(i);
 		}
@@ -138,12 +143,12 @@ void Core::insert_weighedEdge(DFSGraph &graph)
 		for (int j = 1; j <= wordset_size; j++)
 			if (i != j)
 			{
-				string str1 = wordchain[i];
-				string str2 = wordchain[j];
-				if (*(str1.end() - 1) == *str2.begin())
+				//string str1 = wordchain[i];
+				//string str2 = wordchain[j];
+				//if (*(str1.end() - 1) == *str2.begin())
+				if(wordchain[i][wordchain[i].length()-1]==wordchain[j][0])
 				{
 					graph.insertEdge(i, j);
-					//cout << i << " " << str1 << " " << j << " " << str2 << endl;
 				}
 
 			}
@@ -162,31 +167,44 @@ void Core::insert_weighedReverseEdge(DFSGraph &graph)
 		for (int j = 1; j <= wordset_size; j++)
 			if (i != j)
 			{
-				string str1 = wordchain[i];
-				string str2 = wordchain[j];
-				if (*str1.begin() == *(str2.end() - 1))
+				//string str1 = wordchain[i];
+				//string str2 = wordchain[j];
+				//if (*str1.begin() == *(str2.end() - 1))
+				if(wordchain[i][0]==wordchain[j][wordchain[j].size()-1])
 				{
 					graph.insertEdge(i, j);
-					//cout << i << " " << str1 << " " << j << " " << str2 << endl;
 				}
 
 			}
 }
 
 
-void Core::getresult(char *result[],const vector<int>& ans)
+void Core::getresult(char *result[],vector<int>& ans)
 {
 	string str;
-	for (int i = 0; i < ans.size(); i++)
-	{
-		str = wordchain[ans[i]];
-		//动态内存分配
-		result[i] = new char[str.size()+1];	
-		strcpy(result[i],str.c_str());
-		//str.copy(result[i], str.size(), 0);
-		*(result[i] + str.size()) = '\0';
-		cout << str << endl;
+	unsigned int i = 0;
+	try {
+		for (i = 0; i < ans.size(); i++)
+		{
+			str = wordchain[ans[i]];
+			//动态内存分配
+			result[i] = new char[str.size() + 1];
+			strcpy(result[i], str.c_str());
+			//str.copy(result[i], str.size(), 0);
+			*(result[i] + str.size()) = '\0';
+			cout << str << endl;
+		}
 	}
+	catch (bad_alloc &e)
+	{
+		for (unsigned int j = 0; j < i; j++)
+		{
+			delete[]result[j];
+		}
+		ans.resize(0);
+		cout <<"Error on Memory\n"<< e.what()<<endl;
+	}
+	
 }
 
 

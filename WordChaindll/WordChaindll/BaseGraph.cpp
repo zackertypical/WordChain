@@ -16,11 +16,15 @@ BaseGraph::BaseGraph(int n)
 
  void BaseGraph::changeVecWeigh(int i, int weight)
  {
+	 if (i > vertexNum)
+		 throw exception(vertex_out_of_range_error);
 	 vertexWeight[i] = weight;
  }
 
 void BaseGraph::insertEdge(int i, int j) 
 {
+	if ((i > vertexNum)||(j > vertexNum))
+		throw exception(edge_out_of_range_error);
 	adjacentMatrix[i].push_back(j);
 }
 

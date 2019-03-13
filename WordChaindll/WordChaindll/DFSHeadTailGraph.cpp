@@ -15,6 +15,8 @@ DFSHeadTailGraph::~DFSHeadTailGraph()
 
 void DFSHeadTailGraph::setTailSingle(int index)
 {
+	if (index > vertexNum)
+		throw exception(tail_out_of_range_error);
 	m_tail[index] = true;
 }
 
@@ -26,20 +28,19 @@ void DFSHeadTailGraph::findAnsChain()
 		child.assign(vertexNum + 1, 0);
 		if (m_head[i])
 		{
-			//temp_head = i;
-			//headtail_len = 0;
 			dfs(i);
-			//headtail_len 改变
-			//加上自己的长度
-			//if (headtail_len > chain_len)
-			//{
-				//chain_len = headtail_len;
-				//chain_head = temp_head;
-				//chain_tail = temp_tail;
-			//}
 			vector<int> tempChain;
 			for (int j = i; j != 0; j = child[j])
+			{
+				if (find(tempChain.begin(), tempChain.end(), j) != tempChain.end())
+				{
+					cout << "loop" << endl;
+					j = 0;
+					break;
+				}
 				tempChain.push_back(j);
+			}
+				
 			for (int j = tempChain.size() - 1; j >= 0; j--)
 			{
 				if (m_tail[tempChain[j]])
@@ -52,11 +53,10 @@ void DFSHeadTailGraph::findAnsChain()
 		}
 	}
 
-	//sort(saveChain.begin(), saveChain.end(), [](const vector<int>& a, const vector<int>& b)->bool {return a.size() > b.size(); });
-	for (int j = 0; j < saveChain.size(); j++)
+	for (unsigned int j = 0; j < saveChain.size(); j++)
 	{
 		int len = 0;
-		for (int k = 0; k < saveChain[j].size(); k++)
+		for (unsigned int k = 0; k < saveChain[j].size(); k++)
 		{
 			len += vertexWeight[saveChain[j][k]];
 		}
@@ -66,25 +66,8 @@ void DFSHeadTailGraph::findAnsChain()
 			chain_len = len;
 		}
 	}
-	//chain_head = saveChain[0][0];
-	//if (chain_head == 0)
-		//return;
-	//child.assign(vertexNum + 1, 0);
-	//dfs(chain_head);
-	//没有找到
-	//if (chain_tail == 0)
-		//return;
-	//int j;
-	//todo:没有链的情况
-	//if (saveChain[chain_head].size()<2)
-		//return;
+	//TODO:nochain
 	ans_chain = saveChain[chain_head];
-	//for (int j = chain_head; j != chain_tail; j = child[j])
-	{
-		//cout << j << endl;
-		//ans_chain.push_back(j);
-	}
-	//ans_chain.push_back(j);
 
 }
 
@@ -97,7 +80,7 @@ int DFSHeadTailGraph::dfs(int index)
 	if (m_tail[index])
 		contain = true;
 	int len = vertexWeight[index];
-	for (int i = 0; i < adjacentMatrix[index].size(); i++)
+	for (unsigned int i = 0; i < adjacentMatrix[index].size(); i++)
 	{
 		int next_vertex = adjacentMatrix[index][i];
 		int temp_len = 0;
@@ -114,7 +97,7 @@ int DFSHeadTailGraph::dfs(int index)
 			
 			temp_len = dfs(next_vertex);
 			temp_len = temp_len + vertexWeight[index];
-			if ((temp_len > len))
+			if ((temp_len >= len))
 			{
 				len = temp_len;
 				parent[next_vertex] = index;

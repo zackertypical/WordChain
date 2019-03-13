@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "DFSGraph.h"
+//#include "Core.h"
 
 DFSGraph::DFSGraph(int n):BaseGraph(n)
 {
@@ -7,7 +8,6 @@ DFSGraph::DFSGraph(int n):BaseGraph(n)
 	parent.assign(vertexNum + 1, 0);
 	child.assign(vertexNum + 1, 0);
 	dp.assign(vertexNum + 1, 0);
-
 }
 
 DFSGraph::~DFSGraph()
@@ -36,7 +36,6 @@ void DFSGraph::findAnsChain()
 	child.assign(vertexNum + 1, 0);
 	visited.assign(vertexNum + 1, 0);
 	parent.assign(vertexNum + 1, 0);
-	child.assign(vertexNum + 1, 0);
 	dp.assign(vertexNum + 1, 0);
 	if (m_hasCircle)
 		dfs(chain_head);
@@ -49,6 +48,8 @@ void DFSGraph::findAnsChain()
 		if (find(ans_chain.begin(), ans_chain.end(), j) != ans_chain.end())
 		{
 			cout << "loop" << endl;
+			j = 0;
+			break;
 		}
 		ans_chain.push_back(j);
 	}
@@ -63,7 +64,7 @@ int DFSGraph::dfs(int index)
 		//return len;
 	//len  = 0;
 	int len = vertexWeight[index];
-	for (int i = 0; i < adjacentMatrix[index].size(); i++)
+	for (unsigned int i = 0; i < adjacentMatrix[index].size(); i++)
 	{
 		int next_vertex = adjacentMatrix[index][i];
 		int temp_len = 0;
@@ -75,11 +76,15 @@ int DFSGraph::dfs(int index)
 		else 
 		{
 			temp_len = dfs(next_vertex) + vertexWeight[index];
-			if (temp_len > len)
+			if (temp_len >= len)
 			{
-				len = temp_len;
-				parent[next_vertex] = index;
-				child[index] = next_vertex;
+				//if (child[next_vertex] != index)
+				{
+					len = temp_len;
+					parent[next_vertex] = index;
+					child[index] = next_vertex;
+				}
+				
 			}
 		}
 		
@@ -99,7 +104,7 @@ int DFSGraph::dpDfs(int index)
 	visited[index] = 1;
 	
 	len = vertexWeight[index];
-	for (int i = 0; i < adjacentMatrix[index].size(); i++)
+	for (unsigned int i = 0; i < adjacentMatrix[index].size(); i++)
 	{
 		int next_vertex = adjacentMatrix[index][i];
 		int temp_len = 0;
@@ -113,9 +118,12 @@ int DFSGraph::dpDfs(int index)
 			temp_len = dpDfs(next_vertex) + vertexWeight[index];
 			if (temp_len > len)
 			{
-				len = temp_len;
-				parent[next_vertex] = index;
-				child[index] = next_vertex;
+				if (child[next_vertex] != index)
+				{
+					len = temp_len;
+					parent[next_vertex] = index;
+					child[index] = next_vertex;
+				}
 			}
 		}
 

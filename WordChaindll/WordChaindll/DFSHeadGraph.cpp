@@ -35,18 +35,33 @@ void DFSHeadGraph::findAnsChain()
 	//chainhead没有被改变过
 	if (chain_head == 0)
 		return;
+	visited.assign(vertexNum + 1, 0);
+	parent.assign(vertexNum + 1, 0);
 	child.assign(vertexNum + 1, 0);
-	dfs(chain_head);
+	dp.assign(vertexNum + 1, 0);
+	if (m_hasCircle)
+		 dfs(chain_head);
+	else
+		 dpDfs(chain_head);
+	//dfs(chain_head);
 	int j;
 	//todo:没有链的情况
 	for (j = chain_head; j != 0; j = child[j])
 	{
-		//cout << j << endl;
+		//循环的状况！！
+		if (find(ans_chain.begin(), ans_chain.end(), j) != ans_chain.end())
+		{
+			cout << "loop" << endl;
+			j = 0;
+			break;
+		}
 		ans_chain.push_back(j);
 	}
 }
 
 void DFSHeadGraph::setHeadSingle(int index)
 {
+	if (index > vertexNum)
+		throw exception(head_out_of_range_error);
 	m_head[index] = true;
 }

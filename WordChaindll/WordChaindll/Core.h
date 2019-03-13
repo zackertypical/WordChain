@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "DFSHeadTailGraph.h"
+#include "ParameterException.h"
 
 
 class Core
@@ -8,7 +9,7 @@ class Core
 public:
 	vector<string> wordchain;
 	int wordset_size = 0;
-	char alpha_to_lower(char  ch);
+	char alpha_to_lower(char  ch)noexcept(false);
 	void insertChain(char * words[], int len);
 	void Core::print_wordchain();
 	void Core::insert_noweighedEdge(DFSGraph &graph);
@@ -18,7 +19,7 @@ public:
 	void Core::setHead(DFSHeadGraph &graph, char head);
 	void Core::insert_weighedEdge(DFSGraph &graph);
 	void Core::insert_weighedReverseEdge(DFSGraph &graph);
-	void Core::getresult(char *result[], const vector<int>& ans);
+	void Core::getresult(char *result[], vector<int>& ans);
 
 //public:
 	//int gen_chain_char(char* words[], int len, char* result[], char head, char tail, bool enable_loop);

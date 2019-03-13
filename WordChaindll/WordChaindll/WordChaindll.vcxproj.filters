@@ -39,6 +39,9 @@
     <ClInclude Include="WordChaindll.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="ParameterException.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -65,5 +68,11 @@
     <ClCompile Include="BaseGraph.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="ParameterException.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
