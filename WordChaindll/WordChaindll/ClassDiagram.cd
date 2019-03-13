@@ -1,35 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="BaseGraph" Collapsed="true">
-    <Position X="0.5" Y="0.5" Width="2" />
+  <Class Name="BaseGraph">
+    <Position X="0.75" Y="1" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAACIAAAQAGAAAAgAACAAAgAAAAAAAAAAAAAEA=</HashCode>
       <FileName>BaseGraph.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Core">
-    <Position X="5" Y="0.5" Width="4.25" />
+    <Position X="8" Y="0.5" Width="4" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>ECAJAAAAAAIAAAAAAAAEAAAAAEAAIoACAEAAAAAAgAA=</HashCode>
       <FileName>Core.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DFSGraph" Collapsed="true">
-    <Position X="0.5" Y="1.75" Width="2" />
+  <Class Name="DFSGraph">
+    <Position X="4.25" Y="1.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AgBEgAAAAAAAAAFAAAKAAAAAAAAAAACAAAUCACAACAA=</HashCode>
       <FileName>DFSGraph.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DFSHeadGraph" Collapsed="true">
-    <Position X="0.5" Y="3.25" Width="2" />
+  <Class Name="DFSHeadGraph">
+    <Position X="4.25" Y="6.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgAAAAAAAAEAAEAACAAAAAAEAAAAAAAA=</HashCode>
       <FileName>DFSHeadGraph.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DFSHeadTailGraph">
-    <Position X="0.5" Y="4.75" Width="2" />
+    <Position X="9" Y="6.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACACAAEAAEEEAIAAAAQAAAAAAAEAAAAAIAA=</HashCode>
       <FileName>DFSHeadTailGraph.h</FileName>

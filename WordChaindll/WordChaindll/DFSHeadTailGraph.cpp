@@ -34,7 +34,7 @@ void DFSHeadTailGraph::findAnsChain()
 			{
 				if (find(tempChain.begin(), tempChain.end(), j) != tempChain.end())
 				{
-					cout << "loop" << endl;
+					//cout << "loop" << endl;
 					j = 0;
 					break;
 				}

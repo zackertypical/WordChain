@@ -202,7 +202,7 @@ void Core::getresult(char *result[],vector<int>& ans)
 			delete[]result[j];
 		}
 		ans.resize(0);
-		cout <<"Error on Memory\n"<< e.what()<<endl;
+		cout <<"Error on Memory.\n"<< e.what()<<endl;
 	}
 	
 }
