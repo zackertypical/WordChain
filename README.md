@@ -18,8 +18,8 @@
 
 PSP2.1|	Personal Software Process Stages|预估耗时（分钟）|实际耗时（分钟）
 ---|--|--|--|
-Planning|计划|
-·Estimate|估计这个任务需要多少时间|60|60*2
+Planning|计划|60
+·Estimate|估计这个任务需要多少时间|60|
 Development|开发|57*60		
 ·Analysis| ·需求分析 (包括学习新技术)|8*60		
 ·Design Spec|	· 生成设计文档|4*60		
@@ -33,7 +33,7 @@ Reporting|报告	|5*60
 ·Test Report|· 测试报告|2*60		
 ·Size Measurement|	· 计算工作量|60		
 ·ostmortem & Process Improvement Plan|	· 事后总结, 并提出过程改进计划	|2*60	
-| | 合计	|	
+| | 合计	|	63*60
 
 #### 第二阶段
 
@@ -43,3 +43,25 @@ Reporting|报告	|5*60
 2.选择部分单元测试代码发布在博客中，并说明测试的函数，构造测试数据的思路。
 
 3.将单元测试得到的测试覆盖率截图，发表在博客中。要求总体覆盖率到90%以上，否则单元测试部分视作无效。
+
+
+
+PSP2.1|	Personal Software Process Stages|预估耗时（分钟）|实际耗时（分钟）
+---|--|--|--|
+Planning|计划|60|2*60
+·Estimate|估计这个任务需要多少时间|60|2*60
+Development|开发|57*60		|71*60
+·Analysis| ·需求分析 (包括学习新技术)|8*60	| 9*60
+·Design Spec|	· 生成设计文档|4*60		| 2*60
+·Design Review|	· 设计复审 (和同事审核设计文档)|2*60|1*60	
+·Coding Standard|	· 代码规范 (为目前的开发制定合适的规范)|1*60|1*60	
+·Design|· 具体设计	|5*60	|6*60
+·Coding|· 具体编码	|24*60	|36*60
+·Code Review|· 代码复审|8*60	|12*60	
+·Test|· 测试（自我测试，修改代码，提交修改）|5*60|5*60	
+Reporting|报告	|5*60	|5*60
+·Test Report|· 测试报告|2*60 		|3*60
+·Size Measurement|	· 计算工作量|1*60	|1*60	
+·ostmortem & Process Improvement Plan|	· 事后总结, 并提出过程改进计划	|2*60	|1*60
+| | 合计	|	63*60|78*60
+

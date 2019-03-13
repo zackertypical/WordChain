@@ -6,18 +6,19 @@
 #define MAX 10005
 #define CHARLEN 1000
 
+static const char* m_file_error = "File open error!";
+static const char* m_command_error = "Command error!";
+static const char* m_maxword_error = "Words out of range 10000!";
+
+
 int read_file(char *filename,char*words[])
 {
 	string str = "";
 	ifstream fin(filename);
 	if (!fin)
 	{
-		//todo :throw..
-		cout << "文件无法打开"<<endl;
-		return 0;
+		throw exception(m_file_error);
 	}
-		
-	//freopen(filename, "r",stdin);
 	char ch;
 	int i = 0;
 	int j = 0;
@@ -35,12 +36,15 @@ int read_file(char *filename,char*words[])
 				continue;
 			words[i][j] = '\0';
 			i++;
+			if (i >= MAX - 5)
+				throw exception(m_maxword_error);
 			words[i] = new char[CHARLEN];
 			j = 0;
 		}
 	}
 	words[i][j] = '\0';
 	i++;
+
 	//输出
 	//for (j = 0;j < i;j++)
 	{
@@ -48,6 +52,7 @@ int read_file(char *filename,char*words[])
 	}
 	cout << endl;
 	return i;
+
 }
 
 void output_file(char *filename, char*results[],int len)
@@ -55,9 +60,7 @@ void output_file(char *filename, char*results[],int len)
 	ofstream fout(filename);
 	if (!fout)
 	{
-		//todo throw....
-		cout << "无法写入" << endl;
-		return;
+		throw exception(m_file_error);
 	}
 	for (int i = 0; i < len; i++)
 	{
@@ -67,10 +70,70 @@ void output_file(char *filename, char*results[],int len)
 }
 
 
+void deal_command(int argc,char *argv[],char &head,char &tail,char* &filename,bool &findMaxChar,bool &findMaxLen,bool &enable_loop)
+{
+	int opt = 1;
+	for (opt = 1; opt < argc; opt++)
+	{
+		if (opt == argc - 1)
+		{
+			filename = argv[opt];
+			break;
+		}
+
+		if(argv[opt][0]!='-')
+			throw (exception(m_command_error));
+		
+		switch (argv[opt][1])
+		{
+			case 'w':
+				if (findMaxChar || findMaxLen)
+					throw(exception(m_command_error));
+				findMaxLen = true;
+				break;
+			case 'c':
+				if (findMaxChar || findMaxLen)
+					throw(exception(m_command_error));
+				findMaxChar = true;
+				break;
+			case 'r':
+				if (enable_loop)
+					throw(exception(m_command_error));
+				else
+					enable_loop = true;
+				break;
+			case 'h':
+				if (head)
+					throw(exception(m_command_error));
+				else
+				{
+					opt++;
+					head = argv[opt][0];
+				}
+				break;
+			case 't':
+				if (tail)
+					throw(exception(m_command_error));
+				else
+				{
+					opt++;
+					tail = argv[opt][0];
+				}
+				break;
+			default:
+				throw(exception(m_command_error));
+				break;
+		}
+			
+		
+	}
+}
+
+
 int main(int argc,char *argv[])
 {
-	//char *words[MAX];
-	//char *result[MAX];
+	char *words[MAX];
+	char *result[MAX];
 	int len = 0;
 
 	bool findMaxChar = false;
@@ -80,105 +143,40 @@ int main(int argc,char *argv[])
 	bool enable_loop = false;
 	char *filename;
 
+
 	//解析命令行
-	int opt = 1;
-	int flag = false;
-
-	for (opt = 1; opt < argc; opt++)
+	try
 	{
-		if (flag)
+		deal_command(argc, argv, head, tail, filename, findMaxChar, findMaxLen, enable_loop);
+		len = read_file(filename, words);
+		//len = read_file("../Debug/m10.txt", words);
+		int ans;
+		if (findMaxChar)
 		{
-			cout << "wrong format" << endl;
-			break;
+			ans = gen_chain_char(words, len, result, head, tail, enable_loop);
 		}
-		if (opt == argc - 1)
-		{
-			filename = argv[opt];
-			break;
+		else{
+			ans = gen_chain_word(words, len, result, head, tail, enable_loop);
 		}
-		switch (argv[opt][0])
-		{
-			case '-':
-			{
-				switch (argv[opt][1])
-				{
-				case 'w':
-					if (findMaxChar || findMaxLen)
-						flag = true;
-					else
-						findMaxLen = true;
-					break;
-				case 'c':
-					if (findMaxChar || findMaxLen)
-						flag = true;
-					else
-						findMaxChar = true;
-					break;
-				case 'r':
-					if (enable_loop)
-						flag = true;
-					else
-						enable_loop = true;
-					break;
-				case 'h':
-					if (head)
-						flag = true;
-					else
-					{
-						opt++;
-						head = argv[opt][0];
-					}
-					break;
-				case 't':
-					if (head)
-						flag = true;
-					else
-					{
-						opt++;
-						tail = argv[opt][0];
-					}
-					break;
-				default:
-					flag = true;
-					break;
-				}
-			}
-
-		}
+		//ans = gen_chain_word(words, len, result,0,0,1);
+		//ans = gen_chain_char(words, len, result, 'a',0, 1);
+		if (ans < 2)
+			cout << "no chain found" << endl;
+		output_file("solution.txt", result, ans);
 	}
-	//len = read_file(filename, words);
-	//len = read_file("testfile/11.txt",words);
-	if (flag)
+	catch(exception &e)
 	{
-		cout << "wrong format" << endl;
-		return 0;
+		cout << "Error." << e.what();
 	}
-	int ans;
-	/*if (findMaxChar)
-	{
-		ans = coreWordCompute.gen_chain_char(words, len, result, head, tail, enable_loop);
-	}
-	else{
-		ans = coreWordCompute.gen_chain_word(words, len, result, head, tail, enable_loop);
-	}*/
-	//ans = gen_chain_word(words, len, result,0,0,1);
-	char *words[100] = { "abc","cbb","bmm","mcd","dak","kao","jm","zdd","lq","qq" };
-	char *result[1000];
-	ans = gen_chain_word(words, 10, result, 0, 0, 1);
-	if (ans < 2)
-		cout << "no chain found" << endl;
-	output_file("solution.txt", result,ans);
 
 	//释放内存
 	for (int i = 0; i < len; i++)
 	{
-		delete[]words[i];
-		if(!result[i])
+		if (words[i])
+			delete[]words[i];
+		if(result[i])
 			delete[]result[i];
 	}
 
 	return 0;
-		
-
-
 }
